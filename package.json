@@ -1,0 +1,13 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {},
+    "dependencies": {
+        "chokidar": "^4.0.3",
+        "npm-check-updates": "^18.0.1"
+    }
+}

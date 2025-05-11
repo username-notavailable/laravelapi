@@ -1,0 +1,7 @@
+*
+!keycloak-jwks/
+!keycloak-jwks/*
+!keycloak-jwks/**/*
+keycloak-jwks/target/
+!public/
+!.gitignore
