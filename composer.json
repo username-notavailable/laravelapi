@@ -52,8 +52,7 @@
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi",
             "npm install",
-            "node_modules/.bin/ncu",
-            "@php artisan fz:run:theme:cmd --build"
+            "node_modules/.bin/ncu"
         ]
     },
     "extra": {
