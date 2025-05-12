@@ -35,6 +35,8 @@ else
     COMMAND="/usr/local/bin/php /app/artisan octane:start --host=${OCTANE_HOST} --port=${OCTANE_PORT}"
 fi
 
+chmod -R 666 /app/storage/logs/*
+
 cat /etc/supervisor/supervisord.skel.conf | sed s@__COMMAND_PLACEHOLDER__@"${COMMAND}"@ > /etc/supervisor/supervisord.conf
 
 supervisord -n -c /etc/supervisor/supervisord.conf

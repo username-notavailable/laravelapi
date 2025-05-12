@@ -1,5 +1,5 @@
 services:
-  castle:
+  {%% FZKC_CASTLE_NAME %%}-castle:
     build:
       context: .
       dockerfile: Dockerfile
