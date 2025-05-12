@@ -1,7 +1,7 @@
 {
     "name": "fzkc/laravelapi",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "The skeleton API application for the Laravel framework.",
     "keywords": ["laravel", "framework", "fzkc", "api"],
     "license": "MIT",
     "require": {
@@ -33,6 +33,12 @@
             "Tests\\": "tests/"
         }
     },
+    "authors": [
+        {
+            "name": "fuzzy",
+            "email": "d.viviani@fuzzy-net.it"
+        }
+    ],
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
