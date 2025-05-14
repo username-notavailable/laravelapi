@@ -24,6 +24,7 @@ pecl install openswoole; \
 docker-php-ext-enable openswoole;
 
 COPY data/start-octane.sh /start-octane.sh
+COPY data/init_dns.sh /init_dns.sh
 
 COPY data/supervisord.skel.conf /etc/supervisor/supervisord.skel.conf
     

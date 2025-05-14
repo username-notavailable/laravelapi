@@ -39,4 +39,6 @@ chmod -R 666 /app/storage/logs/*
 
 cat /etc/supervisor/supervisord.skel.conf | sed s@__COMMAND_PLACEHOLDER__@"${COMMAND}"@ > /etc/supervisor/supervisord.conf
 
+/init_dns.sh
+
 supervisord -n -c /etc/supervisor/supervisord.conf

@@ -1,5 +1,7 @@
 services:
   {%% FZKC_CASTLE_NAME %%}-castle:
+    cap_add:
+      - NET_ADMIN
     build:
       context: .
       dockerfile: Dockerfile
