@@ -51,10 +51,7 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php -r \"system(PHP_BINARY . ' ./../../console replace:castle:name --quiet ' . getenv('FZKC_CASTLE_NAME') . ' .env');\"",
             "@php -r \"system(PHP_BINARY . ' ./../../console replace:castle:host:port --quiet ' . getenv('FZKC_CASTLE_NAME') . ' ' . getenv('FZKC_CASTLE_PORT') . ' .env');\"",
-            "@php -r \"system(PHP_BINARY . ' ./../../console replace:project:name --quiet ' . getenv('FZKC_CASTLE_NAME') . ' .env');\"",
-            "@php -r \"system(PHP_BINARY . ' ./../../console replace:castle:name --quiet ' . getenv('FZKC_CASTLE_NAME') . ' _docker/dev/data/external.conf.template');\"",
-            "@php -r \"system(PHP_BINARY . ' ./../../console replace:castle:host:port --quiet ' . getenv('FZKC_CASTLE_NAME') . ' ' . getenv('FZKC_CASTLE_PORT') . ' _docker/dev/data/external.conf.template');\"",
-            "@php -r \"system(PHP_BINARY . ' ./../../console replace:project:name --quiet ' . getenv('FZKC_CASTLE_NAME') . ' ._docker/dev/data/external.conf.template');\""
+            "@php -r \"system(PHP_BINARY . ' ./../../console replace:project:name --quiet ' . getenv('FZKC_CASTLE_NAME') . ' .env');\""
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi",

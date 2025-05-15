@@ -8,12 +8,12 @@ server {
     listen [::]:$FZKC_EXPOSED_PORT_NGINX_HTTP;
     #listen $FZKC_EXPOSED_PORT_NGINX_HTTPS ssl;
     #listen [::]:$FZKC_EXPOSED_PORT_NGINX_HTTPS ssl;
-    server_name {%% FZKC_CASTLE_NAME %%}.{%% FZKC_PROJECT_NAME %%}.external.space;
+    server_name {%% FZKC_CASTLE_NAME %%}-{%% FZKC_PROJECT_NAME %%}.external.space;
     server_tokens off;
     root /noexistent;
 
-    #ssl_certificate /etc/nginx/certs/SRV_backend.external.space-CHAIN.CERT.pem;
-    #ssl_certificate_key /etc/nginx/certs/SRV_backend.external.space.KEY.pem;
+    #ssl_certificate /etc/nginx/certs/SRV_backend-example.external.space-CHAIN.CERT.pem;
+    #ssl_certificate_key /etc/nginx/certs/SRV_backend-example.external.space.KEY.pem;
     #ssl_protocols       TLSv1.2 TLSv1.3;
     #ssl_ciphers         HIGH:!aNULL:!MD5;
 
@@ -40,7 +40,7 @@ server {
     location = /robots.txt  { access_log off; log_not_found off; }
  
     access_log off;
-    error_log  /var/log/nginx/error_{%% FZKC_CASTLE_NAME %%}.{%% FZKC_PROJECT_NAME %%}.space.log error;
+    error_log  /var/log/nginx/error_{%% FZKC_CASTLE_NAME %%}-{%% FZKC_PROJECT_NAME %%}.external.space.log error;
  
     error_page 404 /index.php;
  
@@ -69,3 +69,4 @@ server {
         proxy_pass $castle_hostname$suffix;
     }
 }
+
