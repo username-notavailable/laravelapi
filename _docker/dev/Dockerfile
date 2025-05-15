@@ -8,6 +8,7 @@ apt-get update; \
 apt-get upgrade -y; \
 apt-get install -y nodejs; \
 apt-get install -y apt-utils; \
+apt-get install -y gettext-base; \
 apt-get install -y nano; \
 apt-get install -y git; \
 apt-get install -y net-tools; \
