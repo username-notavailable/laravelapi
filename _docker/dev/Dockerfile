@@ -12,6 +12,7 @@ apt-get install -y nano; \
 apt-get install -y git; \
 apt-get install -y net-tools; \
 apt-get install -y iputils-ping; \
+apt-get install -y iptables; \
 apt-get install -y bind9-dnsutils; \
 apt-get install -y supervisor; \
 apt-get install -y procps; \
@@ -23,11 +24,11 @@ docker-php-ext-enable opcache; \
 pecl install openswoole; \
 docker-php-ext-enable openswoole;
 
-COPY data/start-octane.sh /start-octane.sh
+COPY data/start.sh /start.sh
 COPY data/init_dns.sh /init_dns.sh
 
 COPY data/supervisord.skel.conf /etc/supervisor/supervisord.skel.conf
     
 WORKDIR /app
 
-ENTRYPOINT /start-octane.sh
+ENTRYPOINT /start.sh
