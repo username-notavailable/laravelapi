@@ -84,22 +84,22 @@ return [
                     ],
                     'options' => [
                         // some nicer default options
-                        \Memcached::OPT_BINARY_PROTOCOL => (bool)env('FZ_CLIENT_MEMCACHED_OPT_BINARY_PROTOCOL', true),
+                        'OPT_BINARY_PROTOCOL' => (bool)env('FZ_CLIENT_MEMCACHED_OPT_BINARY_PROTOCOL', true),
                         // - nicer TCP options
-                        \Memcached::OPT_TCP_NODELAY => (bool)env('FZ_CLIENT_MEMCACHED_OPT_TCP_NODELAY', true),
-                         \Memcached::OPT_NO_BLOCK => (bool)env('FZ_CLIENT_MEMCACHED_OPT_NO_BLOCK', true),
+                        'OPT_TCP_NODELAY' => (bool)env('FZ_CLIENT_MEMCACHED_OPT_TCP_NODELAY', true),
+                        'OPT_NO_BLOCK' => (bool)env('FZ_CLIENT_MEMCACHED_OPT_NO_BLOCK', true),
                         // // - timeouts
-                        \Memcached::OPT_CONNECT_TIMEOUT => (int)env('FZ_CLIENT_MEMCACHED_OPT_CONNECT_TIMEOUT', 2000), // ms
-                        \Memcached::OPT_POLL_TIMEOUT => (int)env('FZ_CLIENT_MEMCACHED_OPT_POLL_TIMEOUT', 2000),       // ms
-                        \Memcached::OPT_RECV_TIMEOUT => (int)env('FZ_CLIENT_MEMCACHED_OPT_RECV_TIMEOUT', 750 * 1000), // us
-                        \Memcached::OPT_SEND_TIMEOUT => (int)env('FZ_CLIENT_MEMCACHED_OPT_SEND_TIMEOUT', 750 * 1000), // us
+                        'OPT_CONNECT_TIMEOUT' => (int)env('FZ_CLIENT_MEMCACHED_OPT_CONNECT_TIMEOUT', 2000), // ms
+                        'OPT_POLL_TIMEOUT' => (int)env('FZ_CLIENT_MEMCACHED_OPT_POLL_TIMEOUT', 2000),       // ms
+                        'OPT_RECV_TIMEOUT' => (int)env('FZ_CLIENT_MEMCACHED_OPT_RECV_TIMEOUT', 750 * 1000), // us
+                        'OPT_SEND_TIMEOUT' => (int)env('FZ_CLIENT_MEMCACHED_OPT_SEND_TIMEOUT', 750 * 1000), // us
                         // - better failover
-                        \Memcached::OPT_DISTRIBUTION => \Memcached::DISTRIBUTION_CONSISTENT,
-                        \Memcached::OPT_LIBKETAMA_COMPATIBLE => (bool)env('FZ_CLIENT_MEMCACHED_OPT_LIBKETAMA_COMPATIBLE', true),
-                        \Memcached::OPT_RETRY_TIMEOUT => (int)env('FZ_CLIENT_MEMCACHED_OPT_RETRY_TIMEOUT', 2),
-                        \Memcached::OPT_SERVER_FAILURE_LIMIT => (int)env('FZ_CLIENT_MEMCACHED_OPT_SERVER_FAILURE_LIMIT', 5),
-                        \Memcached::OPT_SERVER_TIMEOUT_LIMIT => (int)env('FZ_CLIENT_MEMCACHED_OPT_SERVER_TIMEOUT_LIMIT', 0),
-                        \Memcached::OPT_AUTO_EJECT_HOSTS => (bool)env('FZ_CLIENT_MEMCACHED_OPT_AUTO_EJECT_HOSTS', true),
+                        'OPT_DISTRIBUTION' => (int)env('FZ_CLIENT_MEMCACHED_OPT_DISTRIBUTION', 1), // Memcached::DISTRIBUTION_CONSISTENT
+                        'OPT_LIBKETAMA_COMPATIBLE' => (bool)env('FZ_CLIENT_MEMCACHED_OPT_LIBKETAMA_COMPATIBLE', true),
+                        'OPT_RETRY_TIMEOUT' => (int)env('FZ_CLIENT_MEMCACHED_OPT_RETRY_TIMEOUT', 2),
+                        'OPT_SERVER_FAILURE_LIMIT' => (int)env('FZ_CLIENT_MEMCACHED_OPT_SERVER_FAILURE_LIMIT', 5),
+                        'OPT_SERVER_TIMEOUT_LIMIT' => (int)env('FZ_CLIENT_MEMCACHED_OPT_SERVER_TIMEOUT_LIMIT', 0),
+                        'OPT_AUTO_EJECT_HOSTS' => (bool)env('FZ_CLIENT_MEMCACHED_OPT_AUTO_EJECT_HOSTS', true),
                     ],
                     'servers' => [
                         [env('FZ_CLIENT_MEMCACHED_HOST', '127.0.0.1'), env('FZ_CLIENT_MEMCACHED_PORT', 11211), env('FZ_CLIENT_MEMCACHED_WEIGHT', 100)]
