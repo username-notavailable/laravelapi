@@ -18,12 +18,21 @@ apt-get install -y bind9-dnsutils; \
 apt-get install -y supervisor; \
 apt-get install -y procps; \
 apt-get install -y jq; \
-install-php-extensions pdo_pgsql intl opcache; \
+apt-get install -y zlib1g-dev; \
+apt-get install -y libmemcached-dev; \
+apt-get install -y libssl-dev; \
+install-php-extensions pdo_pgsql intl opcache igbinary; \
 docker-php-ext-enable pdo_pgsql; \
 docker-php-ext-enable intl; \
 docker-php-ext-enable opcache; \
-pecl install openswoole; \
-docker-php-ext-enable openswoole;
+docker-php-ext-enable igbinary;
+
+RUN rm /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
+
+RUN pecl install openswoole-25.2.0 \
+	&& pecl install redis-6.2.0 \
+    && pecl install memcached-3.3.0 \
+	&& docker-php-ext-enable openswoole redis memcached
 
 COPY data/start.sh /start.sh
 COPY data/init_dns.sh /init_dns.sh

@@ -14,6 +14,6 @@ abstract class Controller
 
     public function __construct() 
     {
-        $this->kcClient = new Client();
+        $this->kcClient = Client::create();
     }
 }

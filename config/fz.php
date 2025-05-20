@@ -47,6 +47,64 @@ return [
                     'pvtKeyName' => env('FZ_KC_PVT_KEY_NAME', ''),
                     'certName' => env('FZ_KC_CERT_NAME', '')
                 ]
+            ],
+            'cache' => [
+                // host: string. can be a host, or the path to a unix domain socket.
+                // port: int (default is 6379, should be -1 for unix domain socket)
+                // connectTimeout: float, value in seconds (default is 0 meaning unlimited)
+                // retryInterval: int, value in milliseconds (optional)
+                // readTimeout: float, value in seconds (default is 0 meaning unlimited)
+                // persistent: mixed, if value is string then it used as persistent id, else value casts to boolean
+                // auth: mixed, authentication information 
+                // database: int, database number 
+                // ssl: array, SSL context options
+                'redis' => [ //phpredis
+                    'prefix' => env('FZ_CLIENT_REDIS_PREFIX', ''),
+                    'init' => [
+                        'host' => env('FZ_CLIENT_REDIS_HOST', '127.0.0.1'),
+                        'port' => (int)env('FZ_CLIENT_REDIS_PORT', 6379),
+                        'connectTimeout' => (float)env('FZ_CLIENT_REDIS_TIMEOUT', 2.5),
+                        'retryInterval' => (int)env('FZ_CLIENT_REDIS_RETRY_INTERVAL', null),
+                        'readTimeout' => (float)env('FZ_CLIENT_REDIS_READ_TIMEOUT', 0),
+                        'persistent' => env('FZ_CLIENT_REDIS_PERSISTENT_ID', 'kc-client-cache'),
+                        'auth' => [env('FZ_CLIENT_REDIS_USERNAME', ''), env('FZ_CLIENT_REDIS_PASSWORD', '')],
+                        //'database' => (int)env('FZ_CLIENT_REDIS_DB', 2), // ??? D.M.
+                        //'ssl' => ['verify_peer' => (bool)env('FZ_CLIENT_REDIS_SSL_VERIFY_PEER', false)],
+                    ],
+                    'options' => []
+                ],
+                //
+                'memcached' => [ //memcached
+                    //'prefix' => env('FZ_CLIENT_MEMCACHED_PREFIX', ''),
+                    'init' => [
+                        'persistent' => env('FZ_CLIENT_MEMCACHED_PERSISTENT_ID', 'kc-client-cache'),
+                        'auth' => [env('FZ_CLIENT_MEMCACHED_USERNAME', ''), env('FZ_CLIENT_MEMCACHED_PASSWORD', '')],
+                        //'database' => (int)env('FZ_CLIENT_MEMCACHED_DB', 2), // ??? D.M.
+                        //'ssl' => ['verify_peer' => false],
+                    ],
+                    'options' => [
+                        // some nicer default options
+                        \Memcached::OPT_BINARY_PROTOCOL => (bool)env('FZ_CLIENT_MEMCACHED_OPT_BINARY_PROTOCOL', true),
+                        // - nicer TCP options
+                        \Memcached::OPT_TCP_NODELAY => (bool)env('FZ_CLIENT_MEMCACHED_OPT_TCP_NODELAY', true),
+                         \Memcached::OPT_NO_BLOCK => (bool)env('FZ_CLIENT_MEMCACHED_OPT_NO_BLOCK', true),
+                        // // - timeouts
+                        \Memcached::OPT_CONNECT_TIMEOUT => (int)env('FZ_CLIENT_MEMCACHED_OPT_CONNECT_TIMEOUT', 2000), // ms
+                        \Memcached::OPT_POLL_TIMEOUT => (int)env('FZ_CLIENT_MEMCACHED_OPT_POLL_TIMEOUT', 2000),       // ms
+                        \Memcached::OPT_RECV_TIMEOUT => (int)env('FZ_CLIENT_MEMCACHED_OPT_RECV_TIMEOUT', 750 * 1000), // us
+                        \Memcached::OPT_SEND_TIMEOUT => (int)env('FZ_CLIENT_MEMCACHED_OPT_SEND_TIMEOUT', 750 * 1000), // us
+                        // - better failover
+                        \Memcached::OPT_DISTRIBUTION => \Memcached::DISTRIBUTION_CONSISTENT,
+                        \Memcached::OPT_LIBKETAMA_COMPATIBLE => (bool)env('FZ_CLIENT_MEMCACHED_OPT_LIBKETAMA_COMPATIBLE', true),
+                        \Memcached::OPT_RETRY_TIMEOUT => (int)env('FZ_CLIENT_MEMCACHED_OPT_RETRY_TIMEOUT', 2),
+                        \Memcached::OPT_SERVER_FAILURE_LIMIT => (int)env('FZ_CLIENT_MEMCACHED_OPT_SERVER_FAILURE_LIMIT', 5),
+                        \Memcached::OPT_SERVER_TIMEOUT_LIMIT => (int)env('FZ_CLIENT_MEMCACHED_OPT_SERVER_TIMEOUT_LIMIT', 0),
+                        \Memcached::OPT_AUTO_EJECT_HOSTS => (bool)env('FZ_CLIENT_MEMCACHED_OPT_AUTO_EJECT_HOSTS', true),
+                    ],
+                    'servers' => [
+                        [env('FZ_CLIENT_MEMCACHED_HOST', '127.0.0.1'), env('FZ_CLIENT_MEMCACHED_PORT', 11211), env('FZ_CLIENT_MEMCACHED_WEIGHT', 100)]
+                    ]
+                ]
             ]
         ],
     ],
@@ -90,7 +148,6 @@ return [
         ],
     ],
     'log' => [
-        'testLogEnabled' => env('FZ_LOG_TEST_LOG_ENABLED', false),
         'sql' => env('FZ_LOG_SQL', false),
         'login' => [
             'success' => [
@@ -119,6 +176,7 @@ return [
         'keycloak' => [
             'authGuardName' => 'keyCloak',
             'clientIdx' => env('FZ_DEFAULT_KEYCLOAK_CLIENT_IDX', 'default'),
+            'clientCacheType' => env('FZ_DEFAULT_KEYCLOAK_CLIENT_CACHE_TYPE', 'memcached'),
             'onlyGuestFailRouteName' => env('FZ_DEFAULT_KEYCLOAK_ONLY_GUEST_FAIL_ROUTE_NAME', 'index')
         ],
         'sweetapi' => [
