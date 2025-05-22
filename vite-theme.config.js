@@ -4,7 +4,23 @@ import path from 'path';
 import fs from 'fs';
 
 var themesInputsDefinitions = {
-    'default': []
+    'default': [
+        'resources/sass/app.scss', 
+        'resources/js/app.js',
+        'resources/js/login.js',
+        'resources/js/dashboard.js'
+    ],
+    /*'default2': [
+        'resources/sass/app.scss', 
+        'resources/js/app.js',
+        'resources/js/login.js'
+    ],
+    'default3': [
+        'resources/sass/app.scss', 
+        'resources/js/app.js',
+        'resources/js/login.js',
+        'resources/js/dashboard.js'
+    ]*/
 }
 
 var currentTheme = process.env.FZ_SELECTED_THEME;
@@ -74,10 +90,7 @@ function AdjustManifestPlugin() {
 }
 
 console.log(`
-
-########## SELECTED THEME = "${currentTheme}" ##########
-
-`);
+########## SELECTED THEME = "${currentTheme}" ##########`);
 
 export default defineConfig({
     root: rootPath,
@@ -94,8 +107,8 @@ export default defineConfig({
         outDir: 'public/' + currentTheme
     },
     server: {
-        host: '127.0.0.1',
-        port: 8989,
+        host: process.env.FZ_DEV_HOSTNAME,
+        port: process.env.FZ_DEV_PORT,
         cors: true
     } 
 });
