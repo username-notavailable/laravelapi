@@ -15,6 +15,9 @@ then
     OCTANE_WATCH="false"
 fi
 
+CURRENT_IP="$(cat /etc/hosts | grep $FZKC_CASTLE_NAME.$FZKC_PROJECT_NAME.space | cut -f 1 -)"
+
+echo ""
 echo "FZKC_PROJECT_NAME = ${FZKC_PROJECT_NAME}"
 echo "FZKC_CASTLE_NAME = ${FZKC_CASTLE_NAME}"
 echo "FZKC_CASTLE_PORT = ${FZKC_CASTLE_PORT}"
@@ -24,21 +27,35 @@ echo "FZKC_NETWORK ${FZKC_NETWORK}"
 echo "FZKC_NETWORK_GATEWAY_IP = ${FZKC_NETWORK_GATEWAY_IP}"
 echo "FZKC_NETWORK_DNS_IP = ${FZKC_NETWORK_DNS_IP}"
 echo ""
+echo "CURRENT_CASTLE_IP = ${CURRENT_IP}"
+echo ""
 echo "OCTANE_HOST = ${OCTANE_HOST}"
 echo "OCTANE_PORT = ${OCTANE_PORT}"
 echo "OCTANE_WATCH = ${OCTANE_WATCH}"
+echo ""
 
 if [[ "${OCTANE_WATCH}" == "true" ]]
 then
-    COMMAND="/usr/local/bin/php /app/artisan octane:start --host=${OCTANE_HOST} --port=${OCTANE_PORT} --watch"
+    export COMMAND="/usr/local/bin/php /app/artisan octane:start --host=${OCTANE_HOST} --port=${OCTANE_PORT} --watch"
 else
-    COMMAND="/usr/local/bin/php /app/artisan octane:start --host=${OCTANE_HOST} --port=${OCTANE_PORT}"
+    export COMMAND="/usr/local/bin/php /app/artisan octane:start --host=${OCTANE_HOST} --port=${OCTANE_PORT}"
 fi
 
-chmod -R 666 /app/storage/logs/*
+chmod -R 666 /app/storage/logs/*.log
 
-cat /etc/supervisor/supervisord.skel.conf | sed s@__COMMAND_PLACEHOLDER__@"${COMMAND}"@ > /etc/supervisor/supervisord.conf
+/bin/envsubst < /etc/supervisor/supervisord.skel.conf > /etc/supervisor/supervisord.conf
+
+LABEL_L=$(echo -n "${FZKC_PROJECT_NAME}-${FZKC_CASTLE_NAME}-castle-container" | wc -c)
+
+if [[ "$LABEL_L" < "32" ]]
+then
+    LABEL_L=32
+fi
+
+COLUMNS="$[ $COLUMNS - ($LABEL_L + 3)]"
 
 /init_dns.sh
 
-supervisord -n -c /etc/supervisor/supervisord.conf
+/usr/local/bin/php /app/artisan theme:run:cmd dev --hostname=${CURRENT_IP} &
+
+/usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf

@@ -2,6 +2,8 @@ services:
   {%% FZKC_CASTLE_NAME %%}-castle:
     cap_add:
       - NET_ADMIN
+    tty: true
+    stdin_open: true
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,6 +15,9 @@ services:
       COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME}
       FZKC_PROJECT_NAME: ${FZKC_PROJECT_NAME}
       FZKC_CASTLE_NAME: ${FZKC_CASTLE_NAME}
+      COLUMNS: ${COLUMNS}
+      LINES: ${LINES}
+      TERM: ${TERM}
     hostname: ${FZKC_CASTLE_NAME}.${FZKC_PROJECT_NAME}.space
     dns:
       - ${FZKC_NETWORK_DNS_IP}
