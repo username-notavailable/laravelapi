@@ -50,7 +50,7 @@ class AssetsController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'e' => 'required|string|regex:/^[a-z0-9A-Z\_]{3,70}$/',
-            'f' => 'required|string|regex:/^[a-z0-9A-Z\-_]{3,70}$/',
+            'f' => 'required|string|regex:/^[a-z0-9A-Z\-_.]{3,70}$/',
             's' => 'required|string|regex:/^[a-z]{2,3}$/'
         ]);
 
@@ -60,7 +60,7 @@ class AssetsController extends Controller
         else {
             $requestedFile = storage_path('assets/' . $subDir . '/' . $request->e . 's/' . $request->f);
 
-            if (file_exists($requestedFile . '___' . $request->s) && $serveResizedAssets) {
+            if ($serveResizedAssets && file_exists($requestedFile . '___' . $request->s)) {
                 $requestedFile .= '___' . $request->s;
             }
     

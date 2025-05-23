@@ -45,15 +45,6 @@ chmod -R 666 /app/storage/logs/*.log
 
 /bin/envsubst < /etc/supervisor/supervisord.skel.conf > /etc/supervisor/supervisord.conf
 
-LABEL_L=$(echo -n "${FZKC_PROJECT_NAME}-${FZKC_CASTLE_NAME}-castle-container" | wc -c)
-
-if [[ "$LABEL_L" < "32" ]]
-then
-    LABEL_L=32
-fi
-
-COLUMNS="$[ $COLUMNS - ($LABEL_L + 3)]"
-
 /init_dns.sh
 
 /usr/local/bin/php /app/artisan theme:run:cmd dev --hostname=${CURRENT_IP} &

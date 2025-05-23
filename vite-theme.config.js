@@ -4,12 +4,12 @@ import path from 'path';
 import fs from 'fs';
 
 var themesInputsDefinitions = {
-    'default': [
+    /*'default': [
         'resources/sass/app.scss', 
         'resources/js/app.js',
         'resources/js/login.js',
         'resources/js/dashboard.js'
-    ],
+    ],*/
     /*'default2': [
         'resources/sass/app.scss', 
         'resources/js/app.js',
