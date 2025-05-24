@@ -37,12 +37,12 @@ class ApiResponse implements Responsable
         return $this;
     }
 
-    public static function success(array $data) : ApiResponse
+    public static function success(?array $data = null) : ApiResponse
     {
         return new self('success', 200, $data);
     }
 
-    public static function fail(array $data) : ApiResponse
+    public static function fail(?array $data = null) : ApiResponse
     {
         return new self('fail', 422, $data);
     }
