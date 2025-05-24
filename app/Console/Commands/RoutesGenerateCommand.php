@@ -13,10 +13,6 @@ final class RoutesGenerateCommand extends BaseCommand
 
     public function handle(): void
     {
-        $outputPath = base_path('routes/controllers_routes.php');
-
-        ApiRoutes::createRoutesFile(base_path(), $outputPath);
-
-        //chmod($swaggerJsonFilePath, 0666);
+        ApiRoutes::createRoutesFile(base_path(), base_path('routes/controllers_routes.php'));
     }
 }

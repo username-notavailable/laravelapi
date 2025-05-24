@@ -47,6 +47,4 @@ chmod -R 666 /app/storage/logs/*.log
 
 /init_dns.sh
 
-/usr/local/bin/php /app/artisan theme:run:cmd dev --hostname=${CURRENT_IP} &
-
 /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf

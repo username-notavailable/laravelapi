@@ -8,18 +8,12 @@ use Fuzzy\Fzpkg\Classes\SweetApi\Classes\SwaggerEndpoints;
 
 final class SwaggerGenerateCommand extends BaseCommand
 {
-    protected $signature = 'swagger:generate {base_uri=?}';
+    protected $signature = 'swagger:generate { --base_uri= : Server URL }';
 
     protected $description = 'Generate swagger.json file';
 
     public function handle(): void
     {
-        $baseUri = $this->hasArgument('base_uri') ? $this->argument('base_uri') : config('app.url');
-
-        $outputPath = public_path('swagger/swagger.json');
-
-        SwaggerEndpoints::generateSwaggerJson(parse_url($baseUri), $outputPath);
-
-        //chmod($swaggerJsonFilePath, 0666);
+        SwaggerEndpoints::generateSwaggerJson((!empty($this->option('base_uri')) ? parse_url($this->option('base_uri')) : []), public_path('swagger/swagger.json'));
     }
 }
