@@ -42,6 +42,8 @@ else
 fi
 
 chmod -R 666 /app/storage/logs/*.log
+rm /app/storage/logs/octane-server-state.json
+rm /app/storage/logs/swoole_http.log
 
 /bin/envsubst < /etc/supervisor/supervisord.skel.conf > /etc/supervisor/supervisord.conf
 

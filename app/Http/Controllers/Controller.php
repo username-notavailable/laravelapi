@@ -12,8 +12,8 @@ abstract class Controller
     
     protected $kcClient;
 
-    public function __construct() 
+    public function __construct(Client $kcClient) 
     {
-        $this->kcClient = Client::create();
+        $this->kcClient = $kcClient;
     }
 }
