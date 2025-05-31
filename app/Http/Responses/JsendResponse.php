@@ -3,51 +3,53 @@
 namespace App\Http\Responses;
 
 use Illuminate\Contracts\Support\Responsable;
+use Spatie\LaravelData\Data;
+use App\DTOs\ActionResult;
 
 // https://github.com/omniti-labs/jsend
 
-class ApiResponse implements Responsable
+class JsendResponse extends Data implements Responsable
 {
-    protected string $status;
-    protected int $httpCode;
-    protected ?array $data;
-    protected ?int $errorCode;
-    protected string $errorMessage;
-    private array $headers;
+    public function __construct(
+        public string $status,
+        public int $httpCode = 200,
+        public ?array $data = null,
+        public ?int $errorCode = null,
+        public string $errorMessage = '',
+        public array $headers = []
+    )
+    {}
 
-    private function __construct(string $status, int $httpCode = 200, ?array $data = null, string $errorMessage = '', ?int $errorCode = null)
+    // ---
+
+    public static function fromActionResult(ActionResult $actionResult) : JsendResponse
     {
-        $this->status = $status;
-        $this->httpCode = $httpCode;
-        $this->data = $data;
-        $this->errorCode = $errorCode;
-        $this->errorMessage = $errorMessage;
-        $this->headers = [];
+        return new self($actionResult->status->value, $actionResult->httpCode, $actionResult->payload, $actionResult->errorCode, $actionResult->humanErrorMessage, $actionResult->httpHeaders);
     }
 
-    public function withHeaders(array $headers) : ApiResponse
+    public function withHeaders(array $headers) : self
     {
         $this->headers = $headers;
         return $this;
     }
 
-    public function withHttpCode(int $httpCode) : ApiResponse
+    public function withHttpCode(int $httpCode) : self
     {
         $this->httpCode = $httpCode;
         return $this;
     }
 
-    public static function success(?array $data = null) : ApiResponse
+    public static function success(?array $data = null) : self
     {
         return new self('success', 200, $data);
     }
 
-    public static function fail(?array $data = null) : ApiResponse
+    public static function fail(?array $data = null) : self
     {
         return new self('fail', 422, $data);
     }
 
-    public static function error(string $errorMessage, ?array $data = null, ?int $errorCode = null) : ApiResponse
+    public static function error(string $errorMessage, ?array $data = null, ?int $errorCode = null) : self
     {
         return new self('error', 500, $data, $errorMessage, $errorCode);
     }

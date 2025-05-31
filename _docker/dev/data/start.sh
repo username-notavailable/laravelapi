@@ -41,9 +41,17 @@ else
     export COMMAND="/usr/local/bin/php /app/artisan octane:start --host=${OCTANE_HOST} --port=${OCTANE_PORT}"
 fi
 
-chmod -R 666 /app/storage/logs/*.log
-rm /app/storage/logs/octane-server-state.json
-rm /app/storage/logs/swoole_http.log
+umask 0000
+
+if [[ -f "/app/storage/logs/octane-server-state.json" ]]
+then
+    rm /app/storage/logs/octane-server-state.json
+fi
+
+if [[ -f "/app/storage/logs/swoole_http.log" ]]
+then
+    rm /app/storage/logs/swoole_http.log
+fi
 
 /bin/envsubst < /etc/supervisor/supervisord.skel.conf > /etc/supervisor/supervisord.conf
 
