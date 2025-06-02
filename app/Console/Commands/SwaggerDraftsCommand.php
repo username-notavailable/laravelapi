@@ -195,6 +195,10 @@ final class SwaggerDraftsCommand extends BaseCommand
                     [$phpType, $default] = $this->toPhpType($type);
                 }
                 else {
+                    /*if (!isset($propertyData->schema)) {
+                        dd($propertyName, $schema, $propertyData);
+                    }*/
+
                     $phpType = 'App\DTOs\\' . $dtoName . ucfirst($propertyName);
                     $this->createDtoFromSchema($dtoName . ucfirst($propertyName), $propertyData);
                 }
