@@ -50,7 +50,7 @@ class ApiNewActionCommand extends GeneratorCommand
                 $this->fail('Dto class "App\\DTOs\\' . $dto . '" not exists');
             }
             else {
-                $dto = "'App\DTOs\$dto'";
+                $dto = "'App\DTOs\\$dto'";
             }
         }
 
